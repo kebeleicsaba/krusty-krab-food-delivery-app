@@ -1,18 +1,15 @@
-import { View, Alert } from 'react-native';
-import { Button, ThemeProvider } from 'react-native-elements';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from './screens/Home';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <View
-       style={{
-        flex: 1,
-        backgroundColor: '#f2f2f2',
-        justifyContent: 'center'
-       }}
-      >
-       <Button title="Hey!" onPress={() => Alert.alert('Siker!')} />
-      </View>
-    </ThemeProvider>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
