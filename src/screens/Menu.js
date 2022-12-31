@@ -29,7 +29,9 @@ function MenuScreen({ navigation }) {
     <View>
       <FlatList
         data={Foods}
-        renderItem={({ item }) => <MenuItem item={item} navigation={navigation} />}
+        renderItem={({ item }) => (
+          <MenuItem item={item} navigation={navigation} />
+        )}
       />
     </View>
   );
