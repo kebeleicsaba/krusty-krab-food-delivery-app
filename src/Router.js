@@ -7,12 +7,12 @@ import ProfileScreen from "./screens/Profile";
 
 const Tab = createBottomTabNavigator();
 
-export default function Navigation() {
+export default function Router() {
   return (
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
-          tabBarActiveTintColor: "#7C1015",
+          tabBarActiveTintColor: "#FE0002",
         }}
       >
         <Tab.Screen
@@ -32,6 +32,7 @@ export default function Navigation() {
             tabBarIcon: ({ color, size }) => (
               <Foundation name="shopping-cart" color={color} size={size} />
             ),
+            headerShown: false,
           }}
         />
         <Tab.Screen
@@ -41,6 +42,7 @@ export default function Navigation() {
             tabBarIcon: ({ color, size }) => (
               <FontAwesome name="user" color={color} size={size} />
             ),
+            headerShown: false,
           }}
         />
       </Tab.Navigator>

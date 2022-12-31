@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, Image, View } from "react-native";
 import MenuItem from "../components/menuItem";
 import FoodDetailsScreen from "./FoodDetails";
 
@@ -43,12 +43,13 @@ export default function MenuStack() {
       <Stack.Screen
         name="MenuScreen"
         component={MenuScreen}
-        options={{ title: "Menu" }}
+        options={{ 
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="FoodDetails"
         component={FoodDetailsScreen}
-        options={{ title: "Food", presentation: "modal" }}
       />
     </Stack.Navigator>
   );
