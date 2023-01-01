@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons, Foundation, FontAwesome } from "@expo/vector-icons";
 import MenuStack from "./screens/Menu";
 import CartScreen from "./screens/Cart";
-import ProfileScreen from "./screens/Profile";
+import ProfileStack from "./screens/Profile";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +37,7 @@ export default function Router() {
         />
         <Tab.Screen
           name="Profile"
-          component={ProfileScreen}
+          component={ProfileStack}
           options={{
             tabBarIcon: ({ color, size }) => (
               <FontAwesome name="user" color={color} size={size} />

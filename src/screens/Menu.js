@@ -26,7 +26,7 @@ function MenuScreen({ navigation }) {
   ]);
 
   return (
-    <View>
+    <View style={{ backgroundColor: "white", flex: 1 }}>
       <FlatList
         data={Foods}
         renderItem={({ item }) => (

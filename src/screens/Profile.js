@@ -1,22 +1,56 @@
-import { View, Alert, Text } from "react-native";
-import {
-  Button,
-  ThemeProvider,
-} from "react-native-elements";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Button, Text, View } from "react-native";
+import useUser from "../hooks/useUser";
+import LoginScreen from "./Auth/Login";
+import RegisterScreen from "./Auth/Register";
 
-export default function ProfileScreen() {
+const Stack = createNativeStackNavigator();
+
+function ProfileScreen() {
+  const { logout } = useUser()
+
+
   return (
-    <ThemeProvider>
-      <View
-        style={{
-          borderWidth: 0,
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Button title="Hey!" onPress={() => Alert.alert("Profile!")} />        
-      </View>
-    </ThemeProvider>
+    <View style={{ backgroundColor: "white", flex: 1, justifyContent: 'center' }}>
+      <Text>Profile</Text>
+      <Button title="Log out" onPress={logout} />
+    </View>
+  );
+}
+
+export default function ProfileStack() {
+  const { user } = useUser();
+
+  return (
+    <Stack.Navigator>
+      {user.token ? (
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+      ) : (
+        <Stack.Group>
+          <Stack.Screen
+            name="LoginScreen"
+            component={LoginScreen}
+            options={{
+              headerTitle: 'Login',
+              headerShadowVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="RegisterScreen"
+            component={RegisterScreen}
+            options={{
+              headerTitle: 'Register',
+              headerShadowVisible: false,
+            }}
+          />
+        </Stack.Group>
+      )}
+    </Stack.Navigator>
   );
 }
