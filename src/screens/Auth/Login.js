@@ -28,6 +28,7 @@ export default function LoginScreen({ navigation }) {
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}

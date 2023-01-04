@@ -28,6 +28,7 @@ export default function RegisterScreen() {
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
