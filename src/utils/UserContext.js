@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useMemo, useReducer } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -31,42 +31,45 @@ const UserProvider = (props) => {
     initialize();
   }, []);
 
-  const authContext = {
-    login: async ({ email, password }) => {
-      try {
-        const { user } = await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        const token = await user.getIdToken();
-        await SecureStore.setItemAsync("userToken", token);
-        dispatch({ type: SIGN_IN, payload: token });
-      } catch (error) {
-        throw new Error("Something's Wrong!");
-      }
-    },
-    logout: async () => {
-      await auth.signOut();
-      await SecureStore.deleteItemAsync("userToken");
-      dispatch({ type: SIGN_OUT });
-    },
-    register: async ({ email, password }) => {
-      try {
-        const { user } = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        const token = await user.getIdToken();
-        await SecureStore.setItemAsync("userToken", token);
-        dispatch({ type: SIGN_IN, payload: token });
-      } catch (error) {
-        throw new Error("Something's Wrong!");
-      }
-    },
-    user,
-  };
+  const authContext = useMemo(
+    () => ({
+      login: async ({ email, password }) => {
+        try {
+          const { user } = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const token = await user.getIdToken();
+          await SecureStore.setItemAsync("userToken", token);
+          dispatch({ type: SIGN_IN, payload: token });
+        } catch (error) {
+          throw new Error("Something's Wrong!");
+        }
+      },
+      logout: async () => {
+        await auth.signOut();
+        await SecureStore.deleteItemAsync("userToken");
+        dispatch({ type: SIGN_OUT });
+      },
+      register: async ({ email, password }) => {
+        try {
+          const { user } = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const token = await user.getIdToken();
+          await SecureStore.setItemAsync("userToken", token);
+          dispatch({ type: SIGN_IN, payload: token });
+        } catch (error) {
+          throw new Error("Something's Wrong!");
+        }
+      },
+      user,
+    }),
+    [user]
+  );
 
   return <UserContext.Provider value={authContext} {...props} />;
 };
