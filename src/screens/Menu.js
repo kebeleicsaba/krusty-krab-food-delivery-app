@@ -4,39 +4,43 @@ import { FlatList, View } from "react-native";
 import MenuItem from "../components/menuItem";
 import FoodDetailsScreen from "./FoodDetails";
 import { onSnapshot, collection } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import { db, storage } from "../../config/firebase";
+import { ref, getDownloadURL } from "firebase/storage";
 
 const Stack = createNativeStackNavigator();
 
 function MenuScreen({ navigation }) {
-  const [Foods, setFoods] = useState([
-    {
-      name: "Krabby Patty",
-      price: 12,
-      image: require("../images/krabby_patty.png"),
-    },
-    {
-      name: "Coral Bits",
-      price: 8,
-      image: require("../images/coral_bits.png"),
-    },
-    {
-      name: "Kelp Shake",
-      price: 5,
-      image: require("../images/kelp_shake.png"),
-    },
-  ]);
+  const [Foods, setFoods] = useState([]);
 
   useEffect(() => {
-    const unsub = onSnapshot(collection(db, "foods"), (d) => {
-      d.forEach((doc) => {
-        const data = doc.data()
-        console.log(`${doc.id} => ${data.name}`);
-        console.log(`${doc.id} => ${data.price}`);
+    const handleData = (snapshot) => {
+      setFoods([]);
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        getDownloadURL(ref(storage, data.image)).then((url) => {
+          const xhr = new XMLHttpRequest();
+          xhr.responseType = "blob";
+          xhr.onload = (event) => {
+            const blob = xhr.response;
+          };
+          xhr.open("GET", url);
+          xhr.send();
+
+          setFoods((prevState) => [
+            ...prevState,
+            {
+              name: data.name,
+              price: data.price,
+              image: { uri: url },
+            },
+          ]);
+        });
       });
-    });
-    return () => unsub()
-  }, []);
+    };
+
+    const unsub = onSnapshot(collection(db, "foods"), handleData);
+    return () => unsub();
+  }, [db]);
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
