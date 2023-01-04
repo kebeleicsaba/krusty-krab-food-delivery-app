@@ -1,17 +1,17 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Button, Text, View } from "react-native";
 import useUser from "../hooks/useUser";
+import styles from "../styles";
 import LoginScreen from "./Auth/Login";
 import RegisterScreen from "./Auth/Register";
 
 const Stack = createNativeStackNavigator();
 
 function ProfileScreen() {
-  const { logout } = useUser()
+  const { logout } = useUser();
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1, justifyContent: 'center' }}>
-      <Text>Profile</Text>
+    <View style={styles.container}>
       <Button title="Log out" onPress={logout} />
     </View>
   );
@@ -27,7 +27,8 @@ export default function ProfileStack() {
           name="ProfileScreen"
           component={ProfileScreen}
           options={{
-            headerShown: false,
+            title: "Profile",
+            headerShadowVisible: false,
           }}
         />
       ) : (
@@ -36,7 +37,7 @@ export default function ProfileStack() {
             name="LoginScreen"
             component={LoginScreen}
             options={{
-              headerTitle: 'Login',
+              headerTitle: "Login",
               headerShadowVisible: false,
             }}
           />
@@ -44,7 +45,7 @@ export default function ProfileStack() {
             name="RegisterScreen"
             component={RegisterScreen}
             options={{
-              headerTitle: 'Register',
+              headerTitle: "Register",
               headerShadowVisible: false,
             }}
           />

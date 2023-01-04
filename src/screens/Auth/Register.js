@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Button, StyleSheet, TextInput, View } from "react-native";
-import ErrorText from "../../components/errorText";
+import { Button, Text, TextInput, View } from "react-native";
 import useUser from "../../hooks/useUser";
+import styles from "../../styles";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
@@ -20,8 +20,8 @@ export default function RegisterScreen() {
   }
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
-      <ErrorText errorValue={error} />
+    <View style={styles.container}>
+      <Text style={styles.errorText}>{error}</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -42,13 +42,3 @@ export default function RegisterScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 10,
-  },
-});

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Button, StyleSheet, TextInput, View } from "react-native";
-import ErrorText from "../../components/errorText";
+import { Button, Text, TextInput, View } from "react-native";
 import useUser from "../../hooks/useUser";
+import styles from "../../styles";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -14,14 +14,14 @@ export default function LoginScreen({ navigation }) {
       .then(() => {
         setEmail("");
         setError("");
+        setPassword("");
       })
       .catch((err) => setError(err.message));
-    setPassword("");
   }
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1, paddingTop: 10 }}>
-      <ErrorText errorValue={error} />
+    <View style={styles.container}>
+      <Text style={styles.errorText}>{error}</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -41,18 +41,13 @@ export default function LoginScreen({ navigation }) {
       <Button title="Login" onPress={handleLogin} />
       <Button
         title="Or Register"
-        onPress={() => navigation.navigate("RegisterScreen")}
+        onPress={() => {
+          navigation.navigate("RegisterScreen");
+          setEmail("");
+          setError("");
+          setPassword("");
+        }}
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 10,
-  },
-});

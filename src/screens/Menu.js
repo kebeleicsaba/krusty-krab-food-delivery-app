@@ -6,6 +6,7 @@ import FoodDetailsScreen from "./FoodDetails";
 import { onSnapshot, collection } from "firebase/firestore";
 import { db, storage } from "../../config/firebase";
 import { ref, getDownloadURL } from "firebase/storage";
+import styles from "../styles";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,7 +44,7 @@ function MenuScreen({ navigation }) {
   }, [db]);
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
+    <View style={styles.container}>
       <FlatList
         data={Foods}
         renderItem={({ item }) => (
@@ -64,7 +65,11 @@ export default function MenuStack() {
           headerShown: false,
         }}
       />
-      <Stack.Screen name="FoodDetails" component={FoodDetailsScreen} />
+      <Stack.Screen
+        name="FoodDetails"
+        component={FoodDetailsScreen}
+        options={{ headerShadowVisible: false }}
+      />
     </Stack.Navigator>
   );
 }
