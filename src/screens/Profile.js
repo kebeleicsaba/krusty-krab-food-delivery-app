@@ -9,7 +9,6 @@ const Stack = createNativeStackNavigator();
 function ProfileScreen() {
   const { logout } = useUser()
 
-
   return (
     <View style={{ backgroundColor: "white", flex: 1, justifyContent: 'center' }}>
       <Text>Profile</Text>
