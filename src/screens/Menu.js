@@ -1,8 +1,10 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useState } from "react";
-import { FlatList, Image, View } from "react-native";
+import { useEffect, useState } from "react";
+import { FlatList, View } from "react-native";
 import MenuItem from "../components/menuItem";
 import FoodDetailsScreen from "./FoodDetails";
+import { onSnapshot, collection } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +27,17 @@ function MenuScreen({ navigation }) {
     },
   ]);
 
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, "foods"), (d) => {
+      d.forEach((doc) => {
+        const data = doc.data()
+        console.log(`${doc.id} => ${data.name}`);
+        console.log(`${doc.id} => ${data.price}`);
+      });
+    });
+    return () => unsub()
+  }, []);
+
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <FlatList
@@ -43,14 +56,11 @@ export default function MenuStack() {
       <Stack.Screen
         name="MenuScreen"
         component={MenuScreen}
-        options={{ 
+        options={{
           headerShown: false,
         }}
       />
-      <Stack.Screen
-        name="FoodDetails"
-        component={FoodDetailsScreen}
-      />
+      <Stack.Screen name="FoodDetails" component={FoodDetailsScreen} />
     </Stack.Navigator>
   );
 }
