@@ -4,6 +4,7 @@ import { MaterialIcons, Foundation, FontAwesome } from "@expo/vector-icons";
 import MenuStack from "./screens/Menu";
 import CartScreen from "./screens/Cart";
 import ProfileStack from "./screens/Profile";
+import LoadingScreen from "./screens/loading";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +28,7 @@ export default function Router() {
         />
         <Tab.Screen
           name="Cart"
-          component={CartScreen}
+          component={LoadingScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Foundation name="shopping-cart" color={color} size={size} />
