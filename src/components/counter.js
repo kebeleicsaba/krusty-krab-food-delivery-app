@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
+import useCart from "../hooks/useCart";
 import styles from "../styles";
 
-export default function Counter() {
+export default function Counter({ item }) {
   const [Counter, setCounter] = useState(0);
+  const { addToCart } = useCart();
 
   return (
     <View
@@ -32,7 +34,13 @@ export default function Counter() {
         <Text style={styles.buttonText}>+</Text>
       </Pressable>
       <Pressable
-        style={{ ...styles.button, paddingVertical: 10, marginLeft: 15 }}
+        style={{
+          ...styles.button,
+          paddingVertical: 10,
+          paddingHorizontal: 20,
+          marginLeft: 15,
+        }}
+        onPress={() => Counter !== 0 && addToCart(item, Counter)}
       >
         <Text style={styles.buttonText}>Add to Cart</Text>
       </Pressable>

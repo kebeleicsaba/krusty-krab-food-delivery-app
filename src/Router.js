@@ -28,7 +28,7 @@ export default function Router() {
         />
         <Tab.Screen
           name="Cart"
-          component={LoadingScreen}
+          component={CartScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Foundation name="shopping-cart" color={color} size={size} />

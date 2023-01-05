@@ -20,7 +20,7 @@ export default function FoodDetailsSrceen({ navigation, route }) {
       collection(db, "foods"),
       where("name", "==", route.params.name)
     );
-    getData = async () => {
+    const getData = async () => {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         const food = doc.data();
@@ -64,7 +64,7 @@ export default function FoodDetailsSrceen({ navigation, route }) {
         </Text>
         <Text style={{ color: "gray" }}>Price: {FoodPrice} $</Text>
       </View>
-      <Counter />
+      <Counter item={route.params.name} />
     </View>
   );
 }
