@@ -36,7 +36,9 @@ export default styles = StyleSheet.create({
   },
   counterText: {
     fontSize: 16,
-    padding: 6,
+    padding: 0,
     fontWeight: "bold",
+    minWidth: 30,
+    textAlign: "center",
   },
 });

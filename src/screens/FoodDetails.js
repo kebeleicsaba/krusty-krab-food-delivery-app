@@ -4,12 +4,12 @@ import styles from "../styles";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db, storage } from "../../config/firebase";
 import { getDownloadURL, ref } from "firebase/storage";
-import Counter from "../components/counter";
+import AddToCart from "../components/addToCart";
 
 export default function FoodDetailsSrceen({ navigation, route }) {
-  const [FoodPrice, setFoodPrice] = useState();
-  const [FoodImage, setFoodImage] = useState("");
-  const [FoodDescription, setFoodDescription] = useState("");
+  const [foodPrice, setFoodPrice] = useState();
+  const [foodImage, setFoodImage] = useState("");
+  const [foodDescription, setFoodDescription] = useState("");
 
   useEffect(() => {
     navigation.setOptions({ title: route.params.name });
@@ -51,7 +51,7 @@ export default function FoodDetailsSrceen({ navigation, route }) {
             resizeMode: "center",
             marginTop: 20,
           }}
-          source={FoodImage}
+          source={foodImage}
         />
         <Text
           style={{
@@ -60,11 +60,11 @@ export default function FoodDetailsSrceen({ navigation, route }) {
             textAlign: "justify",
           }}
         >
-          {FoodDescription}
+          {foodDescription}
         </Text>
-        <Text style={{ color: "gray" }}>Price: {FoodPrice} $</Text>
+        <Text style={{ color: "gray" }}>Price: {foodPrice} $</Text>
       </View>
-      <Counter item={route.params.name} />
+      <AddToCart item={route.params.name} />
     </View>
   );
 }

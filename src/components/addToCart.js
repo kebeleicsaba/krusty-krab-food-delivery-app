@@ -6,22 +6,21 @@ import { Snackbar } from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
 
 export default function AddToCart({ item }) {
-  const [Counter, setCounter] = useState(0);
-  const [Visible, setVisible] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [snackBarVisible, setSnackBarVisible] = useState(false);
   const { addToCart } = useCart();
   const onDismissSnackBar = () => {
-    setVisible(false);
+    setSnackBarVisible(false);
     setCounter(0);
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, alignItems: "center", padding: 10 }}>
       <View
         style={{
           flex: 1,
           flexDirection: "row",
           alignItems: "center",
-          marginTop: 20,
         }}
       >
         <Pressable
@@ -30,14 +29,14 @@ export default function AddToCart({ item }) {
             borderRadius: 30,
             backgroundColor: "#ff9c9d",
           }}
-          onPress={() => Counter !== 0 && setCounter(Counter - 1)}
+          onPress={() => counter !== 0 && setCounter(counter - 1)}
         >
           <Text style={styles.buttonText}>-</Text>
         </Pressable>
-        <Text style={styles.counterText}>{Counter}</Text>
+        <Text style={styles.counterText}>{counter}</Text>
         <Pressable
           style={{ ...styles.button, borderRadius: 30 }}
-          onPress={() => setCounter(Counter + 1)}
+          onPress={() => setCounter(counter + 1)}
         >
           <Text style={styles.buttonText}>+</Text>
         </Pressable>
@@ -49,24 +48,24 @@ export default function AddToCart({ item }) {
             marginLeft: 15,
           }}
           onPress={() => {
-            if (Counter !== 0) {
-              addToCart(item, Counter);
-              setVisible(!Visible);
+            if (counter !== 0) {
+              addToCart(item, counter);
+              setSnackBarVisible(!snackBarVisible);
             }
           }}
         >
           <Text style={styles.buttonText}>Add to Cart</Text>
         </Pressable>
-        <Snackbar
-          visible={Visible}
-          onDismiss={onDismissSnackBar}
-          action={{
-            label: <AntDesign name="closecircleo" size={20} color="white" />,
-          }}
-        >
-          {`${Counter} ${item} added to cart.`}
-        </Snackbar>
       </View>
+      <Snackbar
+        visible={snackBarVisible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: <AntDesign name="closecircleo" size={20} color="white" />,
+        }}
+      >
+        {`${counter} ${item} added to cart.`}
+      </Snackbar>
     </View>
   );
 }

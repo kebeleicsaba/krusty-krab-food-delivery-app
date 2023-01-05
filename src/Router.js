@@ -2,13 +2,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons, Foundation, FontAwesome } from "@expo/vector-icons";
 import MenuStack from "./screens/Menu";
+import EmptyCartScreen from "./screens/EmptyCart";
 import CartScreen from "./screens/Cart";
 import ProfileStack from "./screens/Profile";
-import LoadingScreen from "./screens/loading";
+import useCart from "./hooks/useCart";
 
 const Tab = createBottomTabNavigator();
 
 export default function Router() {
+  const { cart, getItemsCount } = useCart();
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -28,12 +31,13 @@ export default function Router() {
         />
         <Tab.Screen
           name="Cart"
-          component={CartScreen}
+          component={cart.length !== 0 ? CartScreen : EmptyCartScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Foundation name="shopping-cart" color={color} size={size} />
             ),
             headerShown: false,
+            tabBarBadge: cart.length !== 0 ? getItemsCount() : null,
           }}
         />
         <Tab.Screen
