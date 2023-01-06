@@ -1,13 +1,13 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
-import MenuItem from "../components/menuItem";
+import MenuItem from "../../components/menuItem";
 import FoodDetailsScreen from "./FoodDetails";
 import { onSnapshot, collection } from "firebase/firestore";
-import { db, storage } from "../../config/firebase";
+import { db, storage } from "../../../config/firebase";
 import { ref, getDownloadURL } from "firebase/storage";
-import styles from "../styles";
-import LoadingEffect from "../components/loading";
+import styles from "../../styles";
+import LoadingEffect from "../../components/loading";
 
 const Stack = createNativeStackNavigator();
 

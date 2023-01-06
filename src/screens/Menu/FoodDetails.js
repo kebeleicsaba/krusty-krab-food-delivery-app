@@ -1,11 +1,11 @@
 import { Image, Text, View } from "react-native";
 import { useEffect, useState } from "react";
-import styles from "../styles";
+import styles from "../../styles";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db, storage } from "../../config/firebase";
+import { db, storage } from "../../../config/firebase";
 import { getDownloadURL, ref } from "firebase/storage";
-import AddToCart from "../components/addToCart";
-import LoadingEffect from "../components/loading";
+import AddToCart from "../../components/addToCart";
+import LoadingEffect from "../../components/loading";
 
 export default function FoodDetailsSrceen({ navigation, route }) {
   const [foodPrice, setFoodPrice] = useState();
