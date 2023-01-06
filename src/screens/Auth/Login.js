@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Text, TextInput, View } from "react-native";
+import { Button, Pressable, Text, TextInput, View } from "react-native";
 import useUser from "../../hooks/useUser";
 import styles from "../../styles";
 
@@ -21,33 +21,59 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.errorText}>{error}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        onSubmitEditing={handleLogin}
-      />
-      <Button title="Login" onPress={handleLogin} />
-      <Button
-        title="Or Register"
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          paddingHorizontal: 20,
+          paddingBottom: 20,
+        }}
+      >
+        <Text style={{ color: "red", paddingBottom: 10 }}>{error}</Text>
+        <Text> Email:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder=" Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <Text> Password:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder=" Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          onSubmitEditing={handleLogin}
+        />
+      </View>
+
+      <Pressable
+        style={{ ...styles.button, paddingVertical: 10, marginHorizontal: 30 }}
+        onPress={handleLogin}
+      >
+        <Text style={styles.buttonText}>Login</Text>
+      </Pressable>
+      <Pressable
+        style={{
+          ...styles.button,
+          paddingVertical: 10,
+          paddingHorizontal: 20,
+          marginTop: 15,
+          marginBottom: 40,
+          marginHorizontal: 30,
+        }}
         onPress={() => {
-          navigation.navigate("RegisterScreen");
           setEmail("");
           setError("");
           setPassword("");
+          navigation.navigate("RegisterScreen");
         }}
-      />
+      >
+        <Text style={styles.buttonText}>Register Here</Text>
+      </Pressable>
     </View>
   );
 }
