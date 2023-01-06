@@ -5,10 +5,11 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { db, storage } from "../../config/firebase";
 import { getDownloadURL, ref } from "firebase/storage";
 import AddToCart from "../components/addToCart";
+import LoadingEffect from "../components/loading";
 
 export default function FoodDetailsSrceen({ navigation, route }) {
   const [foodPrice, setFoodPrice] = useState();
-  const [foodImage, setFoodImage] = useState("");
+  const [foodImage, setFoodImage] = useState(null);
   const [foodDescription, setFoodDescription] = useState("");
 
   useEffect(() => {
@@ -39,32 +40,38 @@ export default function FoodDetailsSrceen({ navigation, route }) {
       });
     };
     getData();
-  }, [db]);
+  }, [db, foodImage]);
 
   return (
-    <View style={{ ...styles.container, alignItems: "center" }}>
-      <View style={{ flex: 2, alignItems: "center" }}>
-        <Image
-          style={{
-            width: 170,
-            height: 170,
-            resizeMode: "center",
-            marginTop: 20,
-          }}
-          source={foodImage}
-        />
-        <Text
-          style={{
-            fontSize: 16,
-            margin: 15,
-            textAlign: "justify",
-          }}
-        >
-          {foodDescription}
-        </Text>
-        <Text style={{ color: "gray" }}>Price: {foodPrice} $</Text>
-      </View>
-      <AddToCart item={route.params.name} />
-    </View>
+    <>
+      {foodImage === null ? (
+        <LoadingEffect />
+      ) : (
+        <View style={{ ...styles.container, alignItems: "center" }}>
+          <View style={{ flex: 2, alignItems: "center" }}>
+            <Image
+              style={{
+                width: 170,
+                height: 170,
+                resizeMode: "center",
+                marginTop: 20,
+              }}
+              source={foodImage}
+            />
+            <Text
+              style={{
+                fontSize: 16,
+                margin: 15,
+                textAlign: "justify",
+              }}
+            >
+              {foodDescription}
+            </Text>
+            <Text style={{ color: "gray" }}>Price: {foodPrice} $</Text>
+          </View>
+          <AddToCart item={route.params.name} />
+        </View>
+      )}
+    </>
   );
 }

@@ -2,13 +2,13 @@ import { Image, View } from "react-native";
 import styles from "../styles";
 import * as Animatable from "react-native-animatable";
 
-export default function LoadingScreen() {
+export default function LoadingEffect() {
   const pulse = {
     0: {
       scale: 1,
     },
     0.5: {
-      scale: 1.3,
+      scale: 1.2,
     },
     1: {
       scale: 1,
@@ -26,7 +26,7 @@ export default function LoadingScreen() {
       <Animatable.View
         animation={pulse}
         iterationCount="infinite"
-        style={{ paddingBottom: 20 }}
+        style={{ paddingBottom: 30 }}
       >
         <Image
           source={require("../images/loading.png")}
