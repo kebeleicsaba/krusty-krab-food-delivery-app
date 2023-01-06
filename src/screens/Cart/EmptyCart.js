@@ -1,5 +1,5 @@
 import { Image, Text, View } from "react-native";
-import styles from "../styles";
+import styles from "../../styles";
 
 export default function EmptyCartScreen() {
   return (
@@ -17,7 +17,7 @@ export default function EmptyCartScreen() {
           resizeMode: "contain",
           marginRight: 10,
         }}
-        source={require("../images/empty_cart.png")}
+        source={require("../../images/empty_cart.png")}
       />
       <Text
         style={{
