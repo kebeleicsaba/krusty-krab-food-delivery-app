@@ -38,7 +38,7 @@ export default function CartScreen() {
               ...styles.button,
               paddingVertical: 10,
               paddingHorizontal: 20,
-              marginLeft: 15,
+              marginLeft: 10,
             }}
             onPress={() => console.log(cart)}
           >
