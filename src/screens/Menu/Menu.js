@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, View } from "react-native";
 import MenuItem from "../components/menuItem";
 import FoodDetailsScreen from "./FoodDetails";
 import { onSnapshot, collection } from "firebase/firestore";
