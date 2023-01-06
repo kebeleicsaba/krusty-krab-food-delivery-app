@@ -2,8 +2,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons, Foundation, FontAwesome } from "@expo/vector-icons";
 import MenuStack from "./screens/Menu";
-import EmptyCartScreen from "./screens/EmptyCart";
-import CartScreen from "./screens/Cart";
+import EmptyCartScreen from "./screens/Cart/EmptyCart";
+import CartScreen from "./screens/Cart/Cart";
 import ProfileStack from "./screens/Profile";
 import useCart from "./hooks/useCart";
 
