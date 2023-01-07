@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons, Foundation, FontAwesome } from "@expo/vector-icons";
 import MenuStack from "./screens/Menu/Menu";
 import EmptyCartScreen from "./screens/Cart/EmptyCart";
-import ProfileStack from "./screens/Profile";
+import ProfileStack from "./screens/Auth/Profile";
 import useCart from "./hooks/useCart";
 import CartStack from "./screens/Cart/Cart";
 
