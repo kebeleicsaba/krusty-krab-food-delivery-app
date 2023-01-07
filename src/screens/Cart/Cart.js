@@ -4,18 +4,21 @@ import styles from "../../styles";
 import CartItem from "../../components/cartItem";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import OrderModal from "./Order";
+import useUser from "../../hooks/useUser";
 
 const Stack = createNativeStackNavigator();
 
 function CartScreen({ navigation }) {
   const { cart, getTotalCost } = useCart();
+  const { user } = useUser();
 
   return (
     <View
       style={{
         ...styles.container,
         paddingHorizontal: 20,
-        paddingVertical: 40,
+        paddingTop: 40,
+        paddingBottom: 20,
       }}
     >
       {cart.length != 0 ? (
@@ -43,11 +46,23 @@ function CartScreen({ navigation }) {
               paddingVertical: 10,
               paddingHorizontal: 20,
               marginLeft: 10,
+              backgroundColor: user.token === null ? "#ff9c9d" : "#fe0002",
             }}
+            disabled={user.token === null ? true : false}
             onPress={() => navigation.navigate("OrderModal", { cart: cart })}
           >
             <Text style={styles.buttonText}>Check Out</Text>
           </Pressable>
+          <Text
+            style={{
+              paddingHorizontal: 10,
+              paddingTop: 5,
+              color: "red",
+              textAlign: "center",
+            }}
+          >
+            {user.token === null && "You must log in!"}
+          </Text>
         </>
       ) : (
         <Text>Your cart is empty</Text>
@@ -67,7 +82,12 @@ export default function CartStack() {
       <Stack.Screen
         name="OrderModal"
         component={OrderModal}
-        options={{ headerShadowVisible: false, title: "Order" }}
+        options={{
+          presentation: "fullScreenModal",
+          headerShown: false,
+          headerShadowVisible: false,
+          title: "Order",
+        }}
       />
     </Stack.Navigator>
   );

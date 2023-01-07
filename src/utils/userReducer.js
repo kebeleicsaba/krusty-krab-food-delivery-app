@@ -1,5 +1,6 @@
 export const initialState = {
   token: null,
+  uid: null,
   isLoading: true,
 };
 
@@ -10,11 +11,17 @@ export const INITIALIZE = "INITIALIZE";
 const userReducer = (state, { payload, type }) => {
   switch (type) {
     case SIGN_IN:
-      return { ...state, token: payload, error: null };
+      return { ...state, token: payload.token, uid: payload.uid, error: null };
     case SIGN_OUT:
-      return { ...state, token: null, error: null };
+      return { ...state, token: null, uid: null, error: null };
     case INITIALIZE:
-      return { ...state, isLoading: false, token: payload, error: null };
+      return {
+        ...state,
+        isLoading: false,
+        token: payload.token,
+        uid: payload.uid,
+        error: null,
+      };
     default:
       return initialState;
   }

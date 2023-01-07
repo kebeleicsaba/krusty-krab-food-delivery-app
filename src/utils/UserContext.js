@@ -22,10 +22,11 @@ const UserProvider = (props) => {
       let userToken;
       try {
         userToken = await SecureStore.getItemAsync("userToken");
+        uid = await SecureStore.getItemAsync("userUID");
       } catch (error) {
         userToken = null;
       } finally {
-        dispatch({ type: INITIALIZE, payload: userToken });
+        dispatch({ type: INITIALIZE, payload: { token: userToken, uid: uid} });
       }
     };
     initialize();
@@ -42,7 +43,8 @@ const UserProvider = (props) => {
           );
           const token = await user.getIdToken();
           await SecureStore.setItemAsync("userToken", token);
-          dispatch({ type: SIGN_IN, payload: token });
+          await SecureStore.setItemAsync("userUID", user.uid);
+          dispatch({ type: SIGN_IN, payload: { token: token, uid: user.uid } });
         } catch (error) {
           throw new Error("Something's Wrong!");
         }
@@ -50,6 +52,7 @@ const UserProvider = (props) => {
       logout: async () => {
         await auth.signOut();
         await SecureStore.deleteItemAsync("userToken");
+        await SecureStore.deleteItemAsync("userUID");
         dispatch({ type: SIGN_OUT });
       },
       register: async ({ email, password }) => {
@@ -61,6 +64,7 @@ const UserProvider = (props) => {
           );
           const token = await user.getIdToken();
           await SecureStore.setItemAsync("userToken", token);
+          await SecureStore.setItemAsync("userUID", user.uid);
           dispatch({ type: SIGN_IN, payload: token });
         } catch (error) {
           throw new Error("Something's Wrong!");

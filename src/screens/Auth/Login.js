@@ -33,7 +33,7 @@ export default function LoginScreen({ navigation }) {
         <Text> Email:</Text>
         <TextInput
           style={styles.input}
-          placeholder=" Email"
+          placeholder="Email"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
@@ -42,7 +42,7 @@ export default function LoginScreen({ navigation }) {
         <Text> Password:</Text>
         <TextInput
           style={styles.input}
-          placeholder=" Password"
+          placeholder="Password"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
