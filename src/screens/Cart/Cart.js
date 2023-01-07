@@ -49,7 +49,7 @@ function CartScreen({ navigation }) {
               backgroundColor: user.token === null ? "#ff9c9d" : "#fe0002",
             }}
             disabled={user.token === null ? true : false}
-            onPress={() => navigation.navigate("OrderModal", { cart: cart })}
+            onPress={() => navigation.navigate("OrderModal")}
           >
             <Text style={styles.buttonText}>Check Out</Text>
           </Pressable>

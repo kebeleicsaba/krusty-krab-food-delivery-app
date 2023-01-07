@@ -1,9 +1,14 @@
 import { Text, View } from "react-native";
 import styles from "../../styles";
 import { AntDesign } from "@expo/vector-icons";
+import useUser from "../../hooks/useUser";
+import useCart from "../../hooks/useCart";
+import useLocation from "../../hooks/useLocation";
 
-export default function OrderModal({ route, navigation }) {
-  const cart = route.params.cart;
+export default function OrderModal({ navigation }) {
+  const { location } = useLocation();
+  const { cart } = useCart();
+  const { user } = useUser();
 
   return (
     <View style={styles.container}>
@@ -29,6 +34,8 @@ export default function OrderModal({ route, navigation }) {
         </Text>
       </View>
       <Text>{JSON.stringify(cart)}</Text>
+      <Text>{JSON.stringify(location)}</Text>
+      <Text>uid: {user.uid}</Text>
     </View>
   );
 }
