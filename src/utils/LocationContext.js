@@ -5,20 +5,25 @@ export const LocationContext = createContext();
 
 const LocationProvider = (props) => {
   const [location, setLocation] = useState(false);
+  const [status, setStatus] = useState();
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const getLoc = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
-      console.log(status);
+      setStatus(status);
       if (status === "granted") {
         const location = await Location.getCurrentPositionAsync();
         setLocation(location);
       }
     };
-    getLoc();
-  }, [location]);
+    if (loaded === false) {
+      getLoc();
+      setLoaded(true);
+    }
+  }, [loaded]);
 
-  return <LocationContext.Provider value={{ location }} {...props} />;
+  return <LocationContext.Provider value={{ location, status }} {...props} />;
 };
 
 export default LocationProvider;
