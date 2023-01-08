@@ -30,14 +30,17 @@ export default {
       favicon: "./assets/favicon.png",
     },
     extra: {
-      firebaseConfig: {
-        apiKey: process.env.apiKey,
-        authDomain: process.env.authDomain,
-        projectId: process.env.projectId,
-        storageBucket: process.env.storageBucket,
-        messagingSenderId: process.env.messagingSenderId,
-        appId: process.env.appId,
-        measurementId: process.env.measurementId,
+      config: {
+        firebase: {
+          apiKey: process.env.firebaseApiKey,
+          authDomain: process.env.authDomain,
+          projectId: process.env.projectId,
+          storageBucket: process.env.storageBucket,
+          messagingSenderId: process.env.messagingSenderId,
+          appId: process.env.appId,
+          measurementId: process.env.measurementId,
+        },
+        googleMapsApiKey: process.env.googleMapsApiKey,
       },
     },
   },

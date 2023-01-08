@@ -4,9 +4,9 @@ import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 import Constants from "expo-constants";
 
-const { firebaseConfig } = Constants.manifest.extra;
+const { config } = Constants.manifest.extra;
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(config.firebase);
 
 export const storage = getStorage(app);
 export const db = getFirestore();
