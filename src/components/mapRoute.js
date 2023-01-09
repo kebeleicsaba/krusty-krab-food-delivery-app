@@ -7,12 +7,13 @@ import Constants from "expo-constants";
 import useLocation from "../hooks/useLocation";
 
 const { config } = Constants.manifest.extra;
-const krustyKrabCoords = {
-  latitude: 47.68006,
-  longitude: 16.57868,
-};
 
-export default function MapRoute({ addressCoords, duration, setDuration }) {
+export default function MapRoute({
+  krustyKrabCoords,
+  addressCoords,
+  duration,
+  setDuration,
+}) {
   const [adressLoc, setAddressLoc] = useState();
   const { setGeoError } = useLocation();
 

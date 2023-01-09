@@ -10,11 +10,16 @@ import MapRoute from "../../components/mapRoute";
 import Constants from "expo-constants";
 import Geocoder from "react-native-geocoding";
 import Costs from "../../components/costs";
-import { addDoc, collection, GeoPoint } from "firebase/firestore";
+import { addDoc, collection, GeoPoint, Timestamp } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
 const { config } = Constants.manifest.extra;
 Geocoder.init(config.googleMapsApiKey, { language: "en" });
+
+const krustyKrabCoords = {
+  latitude: 47.68006,
+  longitude: 16.57868,
+};
 
 export default function OrderModal({ navigation }) {
   const [fullName, setFullName] = useState("");
@@ -57,8 +62,30 @@ export default function OrderModal({ navigation }) {
     }
   }, [location]);
 
-  const addOrder = async (order) =>
-    await addDoc(collection(db, "orders"), order);
+  const addOrder = async () =>
+    await addDoc(collection(db, "orders"), {
+      date: Timestamp.fromDate(new Date()),
+      uid: user.uid,
+      finishd: false,
+      fullName: fullName,
+      route: {
+        krustyKrabCoords: krustyKrabCoords,
+        krustyKrabGeopoint: new GeoPoint(
+          krustyKrabCoords.latitude,
+          krustyKrabCoords.longitude
+        ),
+        address: address,
+        addressGeopoint: new GeoPoint(addressLatitude, addressLongitude),
+        addressCoords: {
+          latitude: addressLatitude,
+          longitude: addressLongitude,
+        },
+        duration: duration,
+        deliveryCost: calcDeliveryCost,
+      },
+      cart: cart,
+      cartTotalCost: getTotalCost(),
+    });
 
   return (
     <View style={styles.container}>
@@ -142,6 +169,7 @@ export default function OrderModal({ navigation }) {
             </View>
             {addressLongitude && !addressChanged && !geoError && (
               <MapRoute
+                krustyKrabCoords={krustyKrabCoords}
                 addressCoords={{
                   latitude: addressLatitude,
                   longitude: addressLongitude,
@@ -171,24 +199,7 @@ export default function OrderModal({ navigation }) {
                   : false
               }
               onPress={() => {
-                addOrder({
-                  uid: user.uid,
-                  finishd: false,
-                  fullName: fullName,
-                  address: address,
-                  addressGeopoint: new GeoPoint(
-                    addressLatitude,
-                    addressLongitude
-                  ),
-                  addressCoords: {
-                    latitude: addressLatitude,
-                    longitude: addressLongitude,
-                  },
-                  cart: cart,
-                  cartTotalCost: getTotalCost(),
-                  deliveryCost: calcDeliveryCost,
-                  duration: duration,
-                });
+                addOrder();
                 cartReset();
                 navigation.goBack();
               }}
