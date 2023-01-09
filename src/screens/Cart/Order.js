@@ -20,7 +20,7 @@ export default function OrderModal({ navigation }) {
   const [address, setAddress] = useState("");
   const [addressChanged, setAddressChanged] = useState(false);
   const { location, status, geoError, setGeoError } = useLocation();
-  const { cart } = useCart();
+  const { cart, getTotalCost, cartReset } = useCart();
   const { user } = useUser();
 
   const newAddress = () => {
@@ -73,7 +73,7 @@ export default function OrderModal({ navigation }) {
           Order
         </Text>
       </View>
-      {!addressLongitude && status === "granted" ? (
+      {!addressLongitude && status === "granted" && address === "" ? (
         <LoadingEffect />
       ) : (
         <>
@@ -142,20 +142,41 @@ export default function OrderModal({ navigation }) {
                 }}
               />
             )}
+            <Pressable
+              style={{
+                ...styles.button,
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                marginLeft: 10,
+                backgroundColor:
+                  fullName === "" || address === "" || addressChanged
+                    ? "#ff9c9d"
+                    : "#fe0002",
+              }}
+              disabled={
+                fullName === "" || address === "" || addressChanged
+                  ? true
+                  : false
+              }
+              onPress={() => {
+                console.log({
+                  uid: user.uid,
+                  fullName: fullName,
+                  address: address,
+                  addressCoords: {
+                    latitude: addressLatitude,
+                    longitude: addressLongitude,
+                  },
+                  cart: cart,
+                  totalCost: getTotalCost(),
+                });
+                cartReset();
+                navigation.goBack();
+              }}
+            >
+              <Text style={styles.buttonText}>Order Now</Text>
+            </Pressable>
           </ScrollView>
-          <Pressable
-            style={{
-              ...styles.button,
-              paddingVertical: 10,
-              paddingHorizontal: 20,
-              marginTop: 20,
-              marginBottom: 25,
-              marginHorizontal: 30,
-            }}
-            onPress={() => null}
-          >
-            <Text style={styles.buttonText}>Order Now</Text>
-          </Pressable>
         </>
       )}
     </View>

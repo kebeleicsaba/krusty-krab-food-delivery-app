@@ -5,6 +5,7 @@ import cartReducer, {
   ADD,
   initialState as CartInitialState,
   REMOVE,
+  RESET,
 } from "./cartReducer";
 
 export const CartContext = createContext();
@@ -14,6 +15,7 @@ const CartProvider = (props) => {
 
   const cartContext = useMemo(
     () => ({
+      cartReset: () => dispatch({ type: RESET, payload: {} }),
       addToCart: async (itemName, quantity) => {
         const q = query(collection(db, "foods"), where("name", "==", itemName));
         const querySnapshot = await getDocs(q);
