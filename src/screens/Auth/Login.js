@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 import useUser from "../../hooks/useUser";
 import styles from "../../styles";
 

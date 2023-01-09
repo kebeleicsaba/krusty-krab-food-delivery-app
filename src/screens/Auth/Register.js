@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Button, Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 import useUser from "../../hooks/useUser";
 import styles from "../../styles";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
   const [error, setError] = useState("");
   const { register } = useUser();
 
