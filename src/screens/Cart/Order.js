@@ -9,6 +9,9 @@ import useLocation from "../../hooks/useLocation";
 import MapRoute from "../../components/mapRoute";
 import Constants from "expo-constants";
 import Geocoder from "react-native-geocoding";
+import Costs from "../../components/costs";
+import { addDoc, collection, GeoPoint } from "firebase/firestore";
+import { db } from "../../../config/firebase";
 
 const { config } = Constants.manifest.extra;
 Geocoder.init(config.googleMapsApiKey, { language: "en" });
@@ -19,9 +22,13 @@ export default function OrderModal({ navigation }) {
   const [addressLongitude, setAddressLongitude] = useState(false);
   const [address, setAddress] = useState("");
   const [addressChanged, setAddressChanged] = useState(false);
+  const [duration, setDuration] = useState();
   const { location, status, geoError, setGeoError } = useLocation();
   const { cart, getTotalCost, cartReset } = useCart();
   const { user } = useUser();
+
+  const calcDeliveryCost =
+    duration < 31 || !duration || addressChanged ? 5 : Math.ceil(duration);
 
   const newAddress = () => {
     if (address) {
@@ -33,7 +40,7 @@ export default function OrderModal({ navigation }) {
           setGeoError(false);
           setAddressChanged(!addressChanged);
         })
-        .catch((error) => setGeoError("Wrong address!"));
+        .catch(() => setGeoError("Wrong address!"));
     }
   };
 
@@ -46,9 +53,12 @@ export default function OrderModal({ navigation }) {
           setAddress(json.results[0].formatted_address);
           setGeoError(false);
         })
-        .catch((error) => setGeoError("Wrong address!"));
+        .catch(() => setGeoError("Wrong address!"));
     }
   }, [location]);
+
+  const addOrder = async (order) =>
+    await addDoc(collection(db, "orders"), order);
 
   return (
     <View style={styles.container}>
@@ -84,11 +94,6 @@ export default function OrderModal({ navigation }) {
               paddingBottom: 20,
             }}
           >
-            {/*
-            <Text>{JSON.stringify(cart)}</Text>
-            <Text>uid: {user.uid}</Text>
-          */}
-
             <Text> Full name:</Text>
             <TextInput
               style={styles.input}
@@ -119,6 +124,7 @@ export default function OrderModal({ navigation }) {
                 }}
                 placeholder="Your address"
                 value={address}
+                onSubmitEditing={newAddress}
                 onChangeText={(value) => {
                   setAddress(value);
                   setAddressChanged(true);
@@ -140,13 +146,19 @@ export default function OrderModal({ navigation }) {
                   latitude: addressLatitude,
                   longitude: addressLongitude,
                 }}
+                duration={duration}
+                setDuration={setDuration}
               />
             )}
+
+            <Costs deliveryCost={calcDeliveryCost} />
+
             <Pressable
               style={{
                 ...styles.button,
                 paddingVertical: 10,
                 paddingHorizontal: 20,
+                marginBottom: 30,
                 marginLeft: 10,
                 backgroundColor:
                   fullName === "" || address === "" || addressChanged
@@ -159,16 +171,23 @@ export default function OrderModal({ navigation }) {
                   : false
               }
               onPress={() => {
-                console.log({
+                addOrder({
                   uid: user.uid,
+                  finishd: false,
                   fullName: fullName,
                   address: address,
+                  addressGeopoint: new GeoPoint(
+                    addressLatitude,
+                    addressLongitude
+                  ),
                   addressCoords: {
                     latitude: addressLatitude,
                     longitude: addressLongitude,
                   },
                   cart: cart,
-                  totalCost: getTotalCost(),
+                  cartTotalCost: getTotalCost(),
+                  deliveryCost: calcDeliveryCost,
+                  duration: duration,
                 });
                 cartReset();
                 navigation.goBack();

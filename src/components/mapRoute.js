@@ -12,10 +12,9 @@ const krustyKrabCoords = {
   longitude: 16.57868,
 };
 
-export default function MapRoute({ addressCoords }) {
-  const [duration, setDuration] = useState();
+export default function MapRoute({ addressCoords, duration, setDuration }) {
   const [adressLoc, setAddressLoc] = useState();
-  const { geoError, setGeoError } = useLocation();
+  const { setGeoError } = useLocation();
 
   const getDuration = (result) => {
     if (result) {

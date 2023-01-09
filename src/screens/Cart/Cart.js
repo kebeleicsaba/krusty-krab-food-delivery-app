@@ -21,7 +21,7 @@ function CartScreen({ navigation }) {
         paddingBottom: 20,
       }}
     >
-      {cart.length != 0 ? (
+      {cart.length != 0 && (
         <>
           <FlatList
             data={cart}
@@ -35,7 +35,7 @@ function CartScreen({ navigation }) {
               marginBottom: 20,
             }}
           >
-            <Text style={{ fontSize: 30 }}>Total:</Text>
+            <Text style={{ fontSize: 28 }}>Total:</Text>
             <Text style={{ fontSize: 26, paddingLeft: 20, minWidth: 100 }}>
               {getTotalCost() + " $"}
             </Text>
@@ -64,8 +64,6 @@ function CartScreen({ navigation }) {
             {user.token === null && "You must log in!"}
           </Text>
         </>
-      ) : (
-        <Text>Your cart is empty</Text>
       )}
     </View>
   );
