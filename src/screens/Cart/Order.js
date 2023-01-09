@@ -19,8 +19,7 @@ export default function OrderModal({ navigation }) {
   const [addressLongitude, setAddressLongitude] = useState(false);
   const [address, setAddress] = useState("");
   const [addressChanged, setAddressChanged] = useState(false);
-  const [geoError, setGeoError] = useState(false);
-  const { location, status } = useLocation();
+  const { location, status, geoError, setGeoError } = useLocation();
   const { cart } = useCart();
   const { user } = useUser();
 
@@ -34,7 +33,7 @@ export default function OrderModal({ navigation }) {
           setGeoError(false);
           setAddressChanged(!addressChanged);
         })
-        .catch((error) => setGeoError(true));
+        .catch((error) => setGeoError("Wrong address!"));
     }
   };
 
@@ -47,7 +46,7 @@ export default function OrderModal({ navigation }) {
           setAddress(json.results[0].formatted_address);
           setGeoError(false);
         })
-        .catch((error) => setGeoError(true));
+        .catch((error) => setGeoError("Wrong address!"));
     }
   }, [location]);
 
@@ -101,7 +100,7 @@ export default function OrderModal({ navigation }) {
             <Text>
               {" "}
               Address:{" "}
-              {geoError && <Text style={{ color: "red" }}>Wrong address!</Text>}
+              {geoError && <Text style={{ color: "red" }}>{geoError}</Text>}
             </Text>
             <View
               style={{

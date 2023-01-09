@@ -7,6 +7,7 @@ const LocationProvider = (props) => {
   const [location, setLocation] = useState(false);
   const [status, setStatus] = useState();
   const [loaded, setLoaded] = useState(false);
+  const [geoError, setGeoError] = useState(false);
 
   useEffect(() => {
     const getLoc = async () => {
@@ -23,7 +24,12 @@ const LocationProvider = (props) => {
     }
   }, [loaded]);
 
-  return <LocationContext.Provider value={{ location, status }} {...props} />;
+  return (
+    <LocationContext.Provider
+      value={{ location, status, geoError, setGeoError }}
+      {...props}
+    />
+  );
 };
 
 export default LocationProvider;
