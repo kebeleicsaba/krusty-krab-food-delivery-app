@@ -18,7 +18,7 @@ function CartScreen({ navigation }) {
         ...styles.container,
         paddingHorizontal: 20,
         paddingTop: 40,
-        paddingBottom: 20,
+        paddingBottom: 21,
       }}
     >
       {cart.length != 0 && (

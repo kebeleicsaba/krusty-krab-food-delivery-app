@@ -30,6 +30,7 @@ export default function AddToCart({ item }) {
             backgroundColor: "#ff9c9d",
           }}
           onPress={() => counter !== 0 && setCounter(counter - 1)}
+          disabled={snackBarVisible}
         >
           <Text style={styles.buttonText}>-</Text>
         </Pressable>
@@ -37,6 +38,7 @@ export default function AddToCart({ item }) {
         <Pressable
           style={{ ...styles.button, borderRadius: 30 }}
           onPress={() => setCounter(counter + 1)}
+          disabled={snackBarVisible}
         >
           <Text style={styles.buttonText}>+</Text>
         </Pressable>
