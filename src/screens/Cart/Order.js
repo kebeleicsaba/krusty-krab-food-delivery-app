@@ -64,7 +64,7 @@ export default function OrderModal({ navigation }) {
 
   const addOrder = async () =>
     await addDoc(collection(db, "orders"), {
-      date: Timestamp.fromDate(new Date()),
+      date: Date.now(),
       uid: user.uid,
       finishd: false,
       fullName: fullName,
@@ -179,7 +179,11 @@ export default function OrderModal({ navigation }) {
               />
             )}
 
-            <Costs deliveryCost={calcDeliveryCost} />
+            <Costs
+              deliveryCost={calcDeliveryCost}
+              cart={cart}
+              getTotalCost={getTotalCost}
+            />
 
             <Pressable
               style={{

@@ -18,7 +18,7 @@ export default function MapRoute({
   const { setGeoError } = useLocation();
 
   const getDuration = (result) => {
-    if (result) {
+    if (result && setDuration) {
       setDuration(result.duration);
     }
   };

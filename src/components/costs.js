@@ -21,9 +21,7 @@ function CostItem({ item }) {
   );
 }
 
-export default function Costs({ deliveryCost }) {
-  const { cart, getTotalCost } = useCart();
-
+export default function Costs({ deliveryCost, cart, getTotalCost }) {
   return (
     <View style={{ paddingTop: 10, paddingBottom: 20 }}>
       <View
