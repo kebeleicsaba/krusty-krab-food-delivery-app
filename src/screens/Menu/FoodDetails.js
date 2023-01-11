@@ -66,7 +66,7 @@ export default function FoodDetailsSrceen({ navigation, route }) {
             </Text>
             <Text style={{ color: "gray" }}>Price: {foodPrice} $</Text>
           </View>
-          <AddToCart item={route.params.name} />
+          <AddToCart item={foodName} />
         </View>
       )}
     </>
