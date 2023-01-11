@@ -13,10 +13,13 @@ export default function LoginScreen({ navigation }) {
     login({ email, password })
       .then(() => {
         setEmail("");
-        setError("");
         setPassword("");
+        setError("");
       })
-      .catch((err) => setError(err.message));
+      .catch((err) => {
+        setError(err.message);
+        setPassword("");
+      });
   }
 
   return (

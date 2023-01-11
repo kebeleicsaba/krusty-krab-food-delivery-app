@@ -54,6 +54,10 @@ const UserProvider = (props) => {
             payload: { token: token, uid: user.uid, email: user.email },
           });
         } catch (error) {
+          if (error.code === "auth/invalid-email")
+            throw new Error("Wrong email address!");
+          else if (error.code === "auth/wrong-password")
+            throw new Error("Wrong password!");
           throw new Error("Something's Wrong!");
         }
       },
@@ -76,9 +80,22 @@ const UserProvider = (props) => {
           await SecureStore.setItemAsync("userUID", user.uid);
           dispatch({ type: SIGN_IN, payload: token });
         } catch (error) {
+          console.log(error.code);
+          if (error.code === "auth/invalid-email")
+            throw new Error("Wrong email address!");
+          if (error.code === "auth/weak-password")
+            throw new Error("Weak password!");
+          if (error.code === "auth/email-already-in-use")
+            throw new Error("Email alredy in use!");
           throw new Error("Something's Wrong!");
         }
       },
+      // editEmail: async ({ email }) => {
+      //   const userToken = await SecureStore.getItemAsync("userToken");
+      //   console.log(userToken)
+      //   const { user } = await verifyIdToken(auth, userToken)
+      //   console.log(user)
+      // },
       user,
     }),
     [user]

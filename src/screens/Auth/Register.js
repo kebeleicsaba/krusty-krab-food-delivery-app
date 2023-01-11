@@ -3,7 +3,7 @@ import { Pressable, Text, TextInput, View } from "react-native";
 import useUser from "../../hooks/useUser";
 import styles from "../../styles";
 
-export default function RegisterScreen() {
+export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -13,10 +13,14 @@ export default function RegisterScreen() {
     register({ email, password })
       .then(() => {
         setEmail("");
+        setPassword("");
         setError("");
+        navigation.navigate("LoginScreen");
       })
-      .catch((err) => setError(err.message));
-    setPassword("");
+      .catch((err) => {
+        setError(err.message);
+        setPassword("");
+      });
   }
 
   return (
