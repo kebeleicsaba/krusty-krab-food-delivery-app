@@ -27,7 +27,7 @@ Menu screen
 <p align="center">
 <img src="screenshots/Menu.PNG" alt="Menu" height="280" />
 <img src="screenshots/FoodDetails.PNG" alt="Food Details" height="280" />
-<img src="screenshots/AddtoCart.PNG" alt="AddToCart" height="280" />
+<img src="screenshots/AddToCart.PNG" alt="AddToCart" height="280" />
 </p>
 
 <p align="center">
