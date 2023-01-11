@@ -19,16 +19,21 @@ export default function OrderDetailsScreen({ route }) {
   }, [db]);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={{ ...styles.container, paddingHorizontal: 20 }}>
       {order ? (
         <>
-          <Text>
+          <Text style={{ marginVertical: 3 }}>
             {new Date(order.date).toDateString() +
               ", " +
               new Date(order.date).toLocaleTimeString()}
           </Text>
-          <Text>Name: {order.fullName}</Text>
-          <Text>Address:</Text>
+          <Text style={{ marginVertical: 3 }}>
+            Status: {order.finishd ? "Finished." : "During transportation."}
+          </Text>
+          <Text style={{ marginVertical: 3 }}>Name: {order.fullName}</Text>
+          <Text style={{ marginTop: 3, marginBottom: 5 }}>
+            Address: {order.route.address}
+          </Text>
           <View>
             <MapRoute
               krustyKrabCoords={order.route.krustyKrabCoords}
