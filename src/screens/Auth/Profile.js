@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Pressable, Text, View } from "react-native";
 import ProfileOrders from "../../components/profileOrders";
+import ProfileTitle from "../../components/profileTitle";
 import useUser from "../../hooks/useUser";
 import styles from "../../styles";
 import LoginScreen from "./Login";
@@ -14,14 +15,14 @@ function ProfileScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>{JSON.stringify(user.email)}</Text>
+      <ProfileTitle email={user.email} />
       <ProfileOrders uid={user.uid} navigation={navigation} />
       <Pressable
         style={{
           ...styles.button,
           paddingVertical: 10,
           paddingHorizontal: 20,
-          marginBottom: 40,
+          marginBottom: 30,
           marginHorizontal: 30,
         }}
         onPress={logout}
@@ -44,7 +45,7 @@ export default function ProfileStack() {
             component={ProfileScreen}
             options={{
               title: "Profile",
-              headerShadowVisible: false,
+              headerShown: false,
             }}
           />
           <Stack.Screen

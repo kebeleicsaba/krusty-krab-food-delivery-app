@@ -4,6 +4,7 @@ import { ScrollView, Text, View } from "react-native";
 import { db } from "../../../config/firebase";
 import MapRoute from "../../components/mapRoute";
 import Costs from "../../components/costs";
+import LoadingEffect from "../../components/loading";
 
 export default function OrderDetailsScreen({ route }) {
   const [order, setOrder] = useState();
@@ -19,7 +20,7 @@ export default function OrderDetailsScreen({ route }) {
 
   return (
     <ScrollView style={styles.container}>
-      {order && (
+      {order ? (
         <>
           <Text>
             {new Date(order.date).toDateString() +
@@ -41,6 +42,8 @@ export default function OrderDetailsScreen({ route }) {
             getTotalCost={() => order.cartTotalCost}
           />
         </>
+      ) : (
+        <LoadingEffect />
       )}
     </ScrollView>
   );

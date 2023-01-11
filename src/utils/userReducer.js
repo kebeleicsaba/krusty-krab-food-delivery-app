@@ -11,7 +11,13 @@ export const INITIALIZE = "INITIALIZE";
 const userReducer = (state, { payload, type }) => {
   switch (type) {
     case SIGN_IN:
-      return { ...state, token: payload.token, uid: payload.uid, error: null };
+      return {
+        ...state,
+        token: payload.token,
+        uid: payload.uid,
+        email: payload.email,
+        error: null,
+      };
     case SIGN_OUT:
       return { ...state, token: null, uid: null, error: null };
     case INITIALIZE:
@@ -20,6 +26,7 @@ const userReducer = (state, { payload, type }) => {
         isLoading: false,
         token: payload.token,
         uid: payload.uid,
+        email: payload.email,
         error: null,
       };
     default:

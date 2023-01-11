@@ -23,10 +23,14 @@ const UserProvider = (props) => {
       try {
         userToken = await SecureStore.getItemAsync("userToken");
         uid = await SecureStore.getItemAsync("userUID");
+        email = await SecureStore.getItemAsync("userEmail");
       } catch (error) {
         userToken = null;
       } finally {
-        dispatch({ type: INITIALIZE, payload: { token: userToken, uid: uid} });
+        dispatch({
+          type: INITIALIZE,
+          payload: { token: userToken, uid: uid, email: email },
+        });
       }
     };
     initialize();
@@ -44,7 +48,11 @@ const UserProvider = (props) => {
           const token = await user.getIdToken();
           await SecureStore.setItemAsync("userToken", token);
           await SecureStore.setItemAsync("userUID", user.uid);
-          dispatch({ type: SIGN_IN, payload: { token: token, uid: user.uid } });
+          await SecureStore.setItemAsync("userEmail", user.email);
+          dispatch({
+            type: SIGN_IN,
+            payload: { token: token, uid: user.uid, email: user.email },
+          });
         } catch (error) {
           throw new Error("Something's Wrong!");
         }
@@ -53,6 +61,7 @@ const UserProvider = (props) => {
         await auth.signOut();
         await SecureStore.deleteItemAsync("userToken");
         await SecureStore.deleteItemAsync("userUID");
+        await SecureStore.deleteItemAsync("uerEmail");
         dispatch({ type: SIGN_OUT });
       },
       register: async ({ email, password }) => {
