@@ -52,19 +52,20 @@ export default function RegisterScreen({ navigation }) {
           secureTextEntry
         />
       </View>
-
-      <Pressable
-        style={{
-          ...styles.button,
-          paddingVertical: 10,
-          paddingHorizontal: 20,
-          marginBottom: 40,
-          marginHorizontal: 30,
-        }}
-        onPress={handleRegister}
-      >
-        <Text style={styles.buttonText}>Register</Text>
-      </Pressable>
+      <View style={{ minHeight: 150, justifyContent: "flex-end" }}>
+        <Pressable
+          style={{
+            ...styles.button,
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            marginBottom: 30,
+            marginHorizontal: 30,
+          }}
+          onPress={handleRegister}
+        >
+          <Text style={styles.buttonText}>Register</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }

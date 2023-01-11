@@ -52,31 +52,36 @@ export default function LoginScreen({ navigation }) {
           onSubmitEditing={handleLogin}
         />
       </View>
-
-      <Pressable
-        style={{ ...styles.button, paddingVertical: 10, marginHorizontal: 30 }}
-        onPress={handleLogin}
-      >
-        <Text style={styles.buttonText}>Login</Text>
-      </Pressable>
-      <Pressable
-        style={{
-          ...styles.button,
-          paddingVertical: 10,
-          paddingHorizontal: 20,
-          marginTop: 15,
-          marginBottom: 40,
-          marginHorizontal: 30,
-        }}
-        onPress={() => {
-          setEmail("");
-          setError("");
-          setPassword("");
-          navigation.navigate("RegisterScreen");
-        }}
-      >
-        <Text style={styles.buttonText}>Register Here</Text>
-      </Pressable>
+      <View style={{minHeight:150, justifyContent:"flex-end"}}>
+        <Pressable
+          style={{
+            ...styles.button,
+            paddingVertical: 10,
+            marginHorizontal: 30,
+          }}
+          onPress={handleLogin}
+        >
+          <Text style={styles.buttonText}>Login</Text>
+        </Pressable>
+        <Pressable
+          style={{
+            ...styles.button,
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            marginTop: 15,
+            marginBottom: 30,
+            marginHorizontal: 30,
+          }}
+          onPress={() => {
+            setEmail("");
+            setError("");
+            setPassword("");
+            navigation.navigate("RegisterScreen");
+          }}
+        >
+          <Text style={styles.buttonText}>Register Here</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
