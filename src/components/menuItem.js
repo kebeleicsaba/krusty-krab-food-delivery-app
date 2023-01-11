@@ -20,7 +20,7 @@ export default function MenuItem({ item, navigation }) {
       secondaryText={item.price + " $"}
       trailing={(props) => <Icon name="chevron-right" {...props} />}
       onPress={() => {
-        navigation.navigate("FoodDetails", { name: item.name });
+        navigation.navigate("FoodDetails", { id: item.id });
       }}
     />
   );

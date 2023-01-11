@@ -32,6 +32,7 @@ function MenuScreen({ navigation }) {
             setFoods((prevState) => [
               ...prevState,
               {
+                id: doc.id,
                 name: data.name,
                 price: data.price,
                 image: { uri: url },
@@ -39,7 +40,7 @@ function MenuScreen({ navigation }) {
             ]);
           });
         });
-        setLoaded(!loaded);
+        setLoaded(true)
       }
     };
 
@@ -49,12 +50,12 @@ function MenuScreen({ navigation }) {
 
   return (
     <>
-      {loaded === false ? (
+      {!loaded ? (
         <LoadingEffect />
       ) : (
-        <View style={styles.container}>
+        <View style={{ ...styles.container, paddingHorizontal: 10 }}>
           <FlatList
-            data={foods}
+            data={foods.sort((a, b) => b.price - a.price)}
             renderItem={({ item }) => (
               <MenuItem item={item} navigation={navigation} />
             )}

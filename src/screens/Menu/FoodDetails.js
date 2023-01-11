@@ -1,7 +1,7 @@
 import { Image, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import styles from "../../styles";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../../config/firebase";
 import { getDownloadURL, ref } from "firebase/storage";
 import AddToCart from "../../components/addToCart";
@@ -9,34 +9,31 @@ import LoadingEffect from "../../components/loading";
 
 export default function FoodDetailsSrceen({ navigation, route }) {
   const [foodPrice, setFoodPrice] = useState();
+  const [foodName, setFoodName] = useState();
   const [foodImage, setFoodImage] = useState(null);
   const [foodDescription, setFoodDescription] = useState("");
 
   useEffect(() => {
-    navigation.setOptions({ title: route.params.name });
-  }, [navigation]);
+    navigation.setOptions({ title: foodName });
+  }, [navigation, foodName]);
 
   useEffect(() => {
-    const q = query(
-      collection(db, "foods"),
-      where("name", "==", route.params.name)
-    );
     const getData = async () => {
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        const food = doc.data();
-        setFoodPrice(food.price);
-        setFoodDescription(food.description);
-        getDownloadURL(ref(storage, food.image)).then((url) => {
-          const xhr = new XMLHttpRequest();
-          xhr.responseType = "blob";
-          xhr.onload = (event) => {
-            const blob = xhr.response;
-          };
-          xhr.open("GET", url);
-          xhr.send();
-          setFoodImage({ uri: url });
-        });
+      const docRef = doc(db, "foods", route.params.id);
+      const docSnap = await getDoc(docRef);
+      const food = docSnap.data();
+      setFoodPrice(food.price);
+      setFoodDescription(food.description);
+      setFoodName(food.name);
+      getDownloadURL(ref(storage, food.image)).then((url) => {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.onload = (event) => {
+          const blob = xhr.response;
+        };
+        xhr.open("GET", url);
+        xhr.send();
+        setFoodImage({ uri: url });
       });
     };
     getData();
