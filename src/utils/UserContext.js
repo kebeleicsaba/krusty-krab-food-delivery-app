@@ -90,12 +90,6 @@ const UserProvider = (props) => {
           throw new Error("Something's Wrong!");
         }
       },
-      // editEmail: async ({ email }) => {
-      //   const userToken = await SecureStore.getItemAsync("userToken");
-      //   console.log(userToken)
-      //   const { user } = await verifyIdToken(auth, userToken)
-      //   console.log(user)
-      // },
       user,
     }),
     [user]
