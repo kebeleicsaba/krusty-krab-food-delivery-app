@@ -10,7 +10,7 @@ import MapRoute from "../../components/mapRoute";
 import Constants from "expo-constants";
 import Geocoder from "react-native-geocoding";
 import Costs from "../../components/costs";
-import { addDoc, collection, GeoPoint, Timestamp } from "firebase/firestore";
+import { addDoc, collection, GeoPoint } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
 const { config } = Constants.manifest.extra;
