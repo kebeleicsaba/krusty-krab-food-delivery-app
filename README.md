@@ -1,5 +1,5 @@
 [![Open in Visual Studio Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20Visual%20Studio%20Code&labelColor=2c2c32&color=007acc&logoColor=007acc)](https://open.vscode.dev/kebeleicsaba/krusty-krab-food-delivery-app)
-# Krusty Krab Food Delivery app 🦀
+# Krusty Krab Food Delivery App 🦀
 This project is my first attempt at using React Native, and was created as a hobby/educational project. The idea behind it was to create a fun food delivery app inspired by the Krusty Krab from SpongeBob SquarePants.
 
 ## Features 📊
